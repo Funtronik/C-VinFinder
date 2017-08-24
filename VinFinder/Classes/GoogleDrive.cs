@@ -30,8 +30,8 @@ namespace VinFinder
                 using (var stream =
                     new FileStream("client_secret.json", FileMode.Open, FileAccess.Read))
                 {
-                    string credPath = System.Environment.GetFolderPath(
-                        System.Environment.SpecialFolder.Personal);
+                    string credPath = Environment.GetFolderPath(
+                        Environment.SpecialFolder.Personal);
                     credPath = Path.Combine(credPath, ".credentials/drive-dotnet-quickstart.json");
                     credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
                         GoogleClientSecrets.Load(stream).Secrets,
