@@ -16,8 +16,6 @@ namespace VinFinder
 {
     class GoogleDrive
     {
-        //const string IdKlienta = "1075622915865-m4sd873nbl21mmhtl7mor06d8hgjo5nn.apps.googleusercontent.com";
-        //const string KluczKlienta = "mrZPXwWUxv4YG2MqYvIRQhFO";
 
         string[] Scopes = { DriveService.Scope.Drive };
         const string ApplicationName = "VINFINDER";
