@@ -26,17 +26,18 @@ namespace VinFinder
         public int fileSize { get; set; }
         public bool fileFind { get; set; }
         public System.IO.MemoryStream Stream = new System.IO.MemoryStream();
-
-        SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\" + System.Environment.UserName + @"\Documents\Visual Studio 2017\Projects\VinFinder\VinFinder\Baza\Baza.mdf;Integrated Security=True");
+        //C:\Users\mjk\Source\Repos\VinFinder\VinFinder\Vin
+        SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\" + System.Environment.UserName + @"\Source\Repos\VinFinder\VinFinder\VinFinder\Baza\Baza.mdf;Integrated Security=True");
         SqlCommand cmd = new SqlCommand();
 
         public void PobieranieLinkow(string keyword)
         {
             int iloscStron = 0;
             string ResultFromUrl = String.Empty;
-            string uriString = "https://www.otomoto.pl/osobowe/";
+            string uriString = "https://www.otomoto.pl/osobowe/fiat/";
+            string marka = "fiat";
             string keywordString = keyword.ToLower();
-            uriString += "q-" + keywordString.Replace(" ", "-");
+            uriString += "" + keywordString.Replace(" ", "-");
 
             System.Net.WebClient webClient = new System.Net.WebClient();
 
@@ -76,8 +77,8 @@ namespace VinFinder
                 }
             } while (!end);
 
-
-            uriString += "q-" + keywordString.Replace(" ", "-");
+            uriString = "https://www.otomoto.pl/osobowe/fiat/";
+            uriString += "" + keywordString.Replace(" ", "-");
             nameValueCollection.Clear();
             nameValueCollection.Add("aaa", keywordString);
 
@@ -418,6 +419,37 @@ namespace VinFinder
                     Stream.WriteTo(file);
                 }
             }
+        }
+
+        public string[] Actualstate(string[] tabela) // pobieranie ilosci row dla kazdej z tabel wyswietlanych w Glowna kontrolka
+        {
+            string[] toreturn = new string[tabela.Count()];
+            DataTable dtable = new DataTable();
+            for (int i = 0; i < tabela.Count(); i++)
+            {
+                string statement = "select count(*) from " + tabela[i].ToString() + "";
+                bool pobrane = false;
+                do
+                {
+                    if (con.State.ToString() != "Open")
+                    {
+                        SqlDataAdapter MyAdapter = new SqlDataAdapter();
+                        SqlCommand mycommand2 = new SqlCommand(statement, con);
+
+                        con.Open();
+
+                        MyAdapter.SelectCommand = mycommand2;
+                        dtable.Clear();
+                        MyAdapter.Fill(dtable);
+
+                        con.Close();
+                        pobrane = true;
+                    }
+                } while (!pobrane);
+
+                toreturn[i] += dtable.Rows[0][0].ToString();
+            }
+            return toreturn;
         }
     }
 }

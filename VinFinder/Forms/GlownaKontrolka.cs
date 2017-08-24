@@ -35,6 +35,22 @@ namespace VinFinder
             wyniki.Columns.Add("Lp.");
             wyniki.Columns.Add("TYTUL");
             wyniki.Columns.Add("LINK");
+
+            string[] tabele = new string[] { "TODO", "DOING", "SAMOCHODY"};
+            string[] IlosciWTabelach = new string[] { };
+            IlosciWTabelach = Voids.Actualstate(tabele);
+
+            Dictionary<int, Label> LabeleDoPodmianyWartosci= new Dictionary<int, Label>();
+            LabeleDoPodmianyWartosci.Add(0, label3);
+            LabeleDoPodmianyWartosci.Add(1, label4);
+            LabeleDoPodmianyWartosci.Add(2, label5);
+            for (int i =0; i<IlosciWTabelach.Count();i++)
+            {
+                
+                {
+                    LabeleDoPodmianyWartosci[i].Text = IlosciWTabelach[i].ToString();
+                }
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
